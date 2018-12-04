@@ -1,0 +1,20 @@
+document: (template_definition)*
+template_definition: LCURLY TEMPLATE DOT ID RCURLY template_params template_body LCURLY SLASH TEMPLATE RCURLY
+template_params: (template_param)*
+template_param: LCURLY ADDRESS PARAM QUESTION_MARK? ID COLUMN ID RCOLUMN | empty
+template_body: (text|tag|template_call)*
+text: ID
+// TODO: CONTINUE HERE
+call_command: LCURLY CALL DOT? ID SLASH? RCURLY | LCURLY CALL DOT? ID RCURLY (call_param)* LCRULY SLASH CALL RCURLY
+call_param: LCURLY PARAM ID COLON ID SLASH RCURLY
+tag: empty //todo:describe
+empty:
+
+
+document: template_definition_list
+template_definition_list: template_definition | template_definition template_definition_list
+template_definition: {template .ID}template_body{/template} | empty
+template_body: (template_param)* | template_content
+template_content: template_call|empty
+template_call: ID
+empty:

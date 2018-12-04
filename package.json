@@ -1,0 +1,10 @@
+{
+  "name": "soy-parser",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start"
+  },
+  "dependencies": {
+    "mocha": "5.2.0"
+  }
+}
