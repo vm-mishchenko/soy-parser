@@ -152,25 +152,52 @@ class Parser {
     this.eat(TOKEN_TYPES.LCURLY);
     this.eat(TOKEN_TYPES.PARAM);
 
+    let type;
+    let value;
     const name = this.currentToken.value;
 
     this.eat(TOKEN_TYPES.ID);
-    this.eat(TOKEN_TYPES.COLON);
 
-    const value = this.currentToken.value;
+    if(this.currentToken.type === TOKEN_TYPES.COLON) {
+      // short param call
+      this.eat(TOKEN_TYPES.COLON);
 
-    if(this.currentToken.type === TOKEN_TYPES.STRING) {
-      this.eat(TOKEN_TYPES.STRING);
-    } else if (this.currentToken.type === TOKEN_TYPES.BOOLEAN) {
-      this.eat(TOKEN_TYPES.BOOLEAN);
-    } else if (this.currentToken.type === TOKEN_TYPES.INTEGER) {
-      this.eat(TOKEN_TYPES.INTEGER);
+      const value = this.currentToken.value;
+
+      if(this.currentToken.type === TOKEN_TYPES.STRING) {
+        this.eat(TOKEN_TYPES.STRING);
+      } else if (this.currentToken.type === TOKEN_TYPES.BOOLEAN) {
+        this.eat(TOKEN_TYPES.BOOLEAN);
+      } else if (this.currentToken.type === TOKEN_TYPES.INTEGER) {
+        this.eat(TOKEN_TYPES.INTEGER);
+      }
+
+      this.eat(TOKEN_TYPES.SLASH);
+      this.eat(TOKEN_TYPES.RCURLY);
+    } else {
+      // extended param call
+      if(this.currentToken.type === TOKEN_TYPES.ID){
+        // this's "kind" type
+        this.eat(TOKEN_TYPES.ID);
+        this.eat(TOKEN_TYPES.EQUAL);
+
+        type = this.currentToken.value;
+
+        this.eat(TOKEN_TYPES.STRING);
+      }
+
+      this.eat(TOKEN_TYPES.RCURLY);
+
+      value = this.currentToken.value;
+
+      this.eat(TOKEN_TYPES.ID);
+      this.eat(TOKEN_TYPES.LCURLY);
+      this.eat(TOKEN_TYPES.SLASH);
+      this.eat(TOKEN_TYPES.PARAM);
+      this.eat(TOKEN_TYPES.RCURLY);
     }
 
-    this.eat(TOKEN_TYPES.SLASH);
-    this.eat(TOKEN_TYPES.RCURLY);
-
-    return new ASTCallParam(name, value);
+    return new ASTCallParam(name, value, type);
   }
 
   parse() {

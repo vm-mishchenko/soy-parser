@@ -59,9 +59,9 @@ describe('Parser', () => {
     const ast = parser.parse();
   });
 
-  it('should parse call with number param', () => {
+  it('should parse call with extended param', () => {
     const lexer = new Lexer(
-      testHelpers.getTestsProgram(`call-params/number-param.soy`));
+      testHelpers.getTestsProgram(`call-params/extended-param.soy`));
     const parser = new Parser(lexer);
     const ast = parser.parse();
   });

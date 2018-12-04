@@ -64,11 +64,12 @@ class ASTCallCommand extends AST {
 }
 
 class ASTCallParam extends AST {
-  constructor(name, value) {
+  constructor(name, value, type) {
     super();
 
     this.name = name;
     this.value = value;
+    this.type = type;
   }
 }
 
