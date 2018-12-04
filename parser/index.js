@@ -111,8 +111,6 @@ class Parser {
   }
 
   callCommand() {
-    const currentTokenIndex = this.lexer.getCurrentTokenIndex();
-
     this.eat(TOKEN_TYPES.LCURLY);
     this.eat(TOKEN_TYPES.CALL);
 
@@ -121,23 +119,58 @@ class Parser {
     }
 
     const name = this.currentToken.value;
+    const parameters = [];
 
     this.eat(TOKEN_TYPES.ID);
 
     if (this.currentToken.type === TOKEN_TYPES.SLASH) {
-      // short call command
+      // call command without extended param
       this.eat(TOKEN_TYPES.SLASH);
-    } else {
-      // extended call command
       this.eat(TOKEN_TYPES.RCURLY);
+    } else {
+      // call command with separate parameters
+      this.eat(TOKEN_TYPES.RCURLY);
+
+      while(this.currentToken.type === TOKEN_TYPES.LCURLY &&
+      this.lexer.readFutureToken().type === TOKEN_TYPES.PARAM) {
+        const callParam = this.callParam();
+
+        parameters.push(callParam);
+      }
+
+      // extended call command
       this.eat(TOKEN_TYPES.LCURLY);
       this.eat(TOKEN_TYPES.SLASH);
       this.eat(TOKEN_TYPES.CALL);
+      this.eat(TOKEN_TYPES.RCURLY);
     }
 
+    return new ASTCallCommand(name, parameters);
+  }
+
+  callParam() {
+    this.eat(TOKEN_TYPES.LCURLY);
+    this.eat(TOKEN_TYPES.PARAM);
+
+    const name = this.currentToken.value;
+
+    this.eat(TOKEN_TYPES.ID);
+    this.eat(TOKEN_TYPES.COLON);
+
+    const value = this.currentToken.value;
+
+    if(this.currentToken.type === TOKEN_TYPES.STRING) {
+      this.eat(TOKEN_TYPES.STRING);
+    } else if (this.currentToken.type === TOKEN_TYPES.BOOLEAN) {
+      this.eat(TOKEN_TYPES.BOOLEAN);
+    } else if (this.currentToken.type === TOKEN_TYPES.INTEGER) {
+      this.eat(TOKEN_TYPES.INTEGER);
+    }
+
+    this.eat(TOKEN_TYPES.SLASH);
     this.eat(TOKEN_TYPES.RCURLY);
 
-    return new ASTCallCommand(name);
+    return new ASTCallParam(name, value);
   }
 
   parse() {

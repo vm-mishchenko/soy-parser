@@ -17,30 +17,51 @@ describe('Parser', () => {
       const ast = parser.parse();
   });
 
-  it('should parse single empty template', () => {
+  it('should parse single template with params', () => {
     const lexer = new Lexer(
       testHelpers.getTestsProgram(`single-template-with-params.soy`));
     const parser = new Parser(lexer);
     const ast = parser.parse();
   });
 
-  it('should parse single empty template', () => {
+  it('should parse single template with simple text', () => {
     const lexer = new Lexer(
       testHelpers.getTestsProgram(`single-text-template.soy`));
     const parser = new Parser(lexer);
     const ast = parser.parse();
   });
 
-  it('should parse single empty template', () => {
+  it('should parse template with call', () => {
     const lexer = new Lexer(
       testHelpers.getTestsProgram(`template-with-call.soy`));
     const parser = new Parser(lexer);
     const ast = parser.parse();
   });
 
-  it('should parse single empty template', () => {
+  it('should parse call with text param', () => {
     const lexer = new Lexer(
       testHelpers.getTestsProgram(`call-params/text-param.soy`));
+    const parser = new Parser(lexer);
+    const ast = parser.parse();
+  });
+
+  it('should parse call with boolean param', () => {
+    const lexer = new Lexer(
+      testHelpers.getTestsProgram(`call-params/boolean-param.soy`));
+    const parser = new Parser(lexer);
+    const ast = parser.parse();
+  });
+
+  it('should parse call with number param', () => {
+    const lexer = new Lexer(
+      testHelpers.getTestsProgram(`call-params/number-param.soy`));
+    const parser = new Parser(lexer);
+    const ast = parser.parse();
+  });
+
+  it('should parse call with number param', () => {
+    const lexer = new Lexer(
+      testHelpers.getTestsProgram(`call-params/number-param.soy`));
     const parser = new Parser(lexer);
     const ast = parser.parse();
   });

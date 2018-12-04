@@ -248,7 +248,7 @@ describe('Lexer', () => {
       ]);
     });
 
-    it('should parse call with boolean param', () => {
+    it('should parse call with number param', () => {
       const lexer = new Lexer(
           testHelpers.getTestsProgram(`call-params/number-param.soy`));
 
