@@ -1,0 +1,12 @@
+{template .parent}
+    {call .child}
+        {param first}Test{/param}
+        {param second: false /}
+    {/call}
+    Test
+{/template}
+
+{template .child}
+    {@param first: string}
+    {@param second: bool}
+{/template}

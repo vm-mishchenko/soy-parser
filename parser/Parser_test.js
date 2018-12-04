@@ -65,4 +65,11 @@ describe('Parser', () => {
     const parser = new Parser(lexer);
     const ast = parser.parse();
   });
+
+  it('should parse full template', () => {
+    const lexer = new Lexer(
+      testHelpers.getTestsProgram(`full/full.soy`));
+    const parser = new Parser(lexer);
+    const ast = parser.parse();
+  });
 });
