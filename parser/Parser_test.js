@@ -80,6 +80,13 @@ describe('Parser', () => {
     const ast = parser.parse();
   });
 
+  it('should parse call with deep link param', () => {
+    const lexer = new Lexer(
+      testHelpers.getTestsProgram(`call-params/deep-link-param.soy`));
+    const parser = new Parser(lexer);
+    const ast = parser.parse();
+  });
+
   it('should parse full template', () => {
     const lexer = new Lexer(
       testHelpers.getTestsProgram(`full/full.soy`));

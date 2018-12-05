@@ -202,19 +202,25 @@ class Parser {
     } else if (this.currentToken.type === TOKEN_TYPES.INTEGER) {
       this.eat(TOKEN_TYPES.INTEGER);
     } else if (this.currentToken.type === TOKEN_TYPES.ID) {
-      this.eat(TOKEN_TYPES.ID);
-
-      while(this.currentToken.type === TOKEN_TYPES.DOT) {
-        this.eat(TOKEN_TYPES.DOT);
-
-        value += `.${this.currentToken.value}`;
-
-        this.eat(TOKEN_TYPES.ID);
-      }
+      value = this.package();
     } else if(this.currentToken.type === TOKEN_TYPES.DOLLAR) {
       this.eat(TOKEN_TYPES.DOLLAR);
 
-      value = `${this.currentToken.value}`;
+      value = `${this.package()}`;
+    }
+
+    return value;
+  }
+
+  package() {
+    let value = this.currentToken.value;
+
+    this.eat(TOKEN_TYPES.ID);
+
+    while(this.currentToken.type === TOKEN_TYPES.DOT) {
+      this.eat(TOKEN_TYPES.DOT);
+
+      value += `.${this.currentToken.value}`;
 
       this.eat(TOKEN_TYPES.ID);
     }
