@@ -24,6 +24,13 @@ describe('Parser', () => {
     const ast = parser.parse();
   });
 
+  it('should parse template with attributes', () => {
+    const lexer = new Lexer(
+      testHelpers.getTestsProgram(`template-with-attributes.soy`));
+    const parser = new Parser(lexer);
+    const ast = parser.parse();
+  });
+
   it('should parse single template with simple text', () => {
     const lexer = new Lexer(
       testHelpers.getTestsProgram(`single-text-template.soy`));

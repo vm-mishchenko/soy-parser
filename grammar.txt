@@ -1,5 +1,6 @@
 document: (template_definition)*
-template_definition: LCURLY TEMPLATE DOT ID RCURLY template_params template_body LCURLY SLASH TEMPLATE RCURLY
+template_definition: LCURLY TEMPLATE DOT ID template_attrs RCURLY template_params template_body LCURLY SLASH TEMPLATE RCURLY
+template_attrs: (VISIBILITY|KIND|STRICT_HTML EQUAL STRING)*
 template_params: (template_param)*
 template_param: LCURLY ADDRESS PARAM QUESTION_MARK? ID COLUMN ID RCOLUMN | empty
 template_body: (text|tag|template_call)*

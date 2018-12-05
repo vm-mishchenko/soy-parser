@@ -31,6 +31,9 @@ class Parser {
     const name = this.currentToken.value;
 
     this.eat(TOKEN_TYPES.ID);
+
+    const attrs = this.templateAttrs();
+
     this.eat(TOKEN_TYPES.RCURLY);
 
     const parameters = this.templateParams();
@@ -42,7 +45,39 @@ class Parser {
     this.eat(TOKEN_TYPES.TEMPLATE);
     this.eat(TOKEN_TYPES.RCURLY);
 
-    return new ASTTemplateDefinition(name, parameters, body);
+    return new ASTTemplateDefinition(name, parameters, body, attrs);
+  }
+
+  templateAttrs() {
+    const attrs = [];
+
+    while(this.currentToken.type === TOKEN_TYPES.VISIBILITY ||
+    this.currentToken.type === TOKEN_TYPES.KIND ||
+    this.currentToken.type === TOKEN_TYPES.STRICT_HTML) {
+      let name;
+
+      if(this.currentToken.type === TOKEN_TYPES.VISIBILITY) {
+        this.eat(TOKEN_TYPES.VISIBILITY);
+        name = TOKEN_TYPES.VISIBILITY;
+      } else if (this.currentToken.type === TOKEN_TYPES.KIND) {
+        this.eat(TOKEN_TYPES.KIND);
+        name = TOKEN_TYPES.KIND;
+      } else if (this.currentToken.type === TOKEN_TYPES.STRICT_HTML) {
+        this.eat(TOKEN_TYPES.STRICT_HTML);
+        name = TOKEN_TYPES.STRICT_HTML;
+      }
+
+      this.eat(TOKEN_TYPES.EQUAL);
+
+      attrs.push({
+        name,
+        value: this.currentToken.value
+      });
+
+      this.eat(TOKEN_TYPES.STRING);
+    }
+
+    return attrs;
   }
 
   templateParams() {

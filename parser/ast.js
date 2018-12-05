@@ -10,12 +10,13 @@ class ASTDocument extends AST {
 }
 
 class ASTTemplateDefinition extends AST {
-  constructor(name, parameters, body) {
+  constructor(name, parameters, body, attrs) {
     super();
 
     this.name = name;
     this.parameters = parameters;
     this.body = body;
+    this.attrs = attrs;
   }
 }
 
