@@ -162,15 +162,7 @@ class Parser {
       // short param call
       this.eat(TOKEN_TYPES.COLON);
 
-      const value = this.currentToken.value;
-
-      if(this.currentToken.type === TOKEN_TYPES.STRING) {
-        this.eat(TOKEN_TYPES.STRING);
-      } else if (this.currentToken.type === TOKEN_TYPES.BOOLEAN) {
-        this.eat(TOKEN_TYPES.BOOLEAN);
-      } else if (this.currentToken.type === TOKEN_TYPES.INTEGER) {
-        this.eat(TOKEN_TYPES.INTEGER);
-      }
+      const value = this.shortPackageParamValue();
 
       this.eat(TOKEN_TYPES.SLASH);
       this.eat(TOKEN_TYPES.RCURLY);
@@ -198,6 +190,36 @@ class Parser {
     }
 
     return new ASTCallParam(name, value, type);
+  }
+
+  shortPackageParamValue() {
+    let value = this.currentToken.value;
+
+    if(this.currentToken.type === TOKEN_TYPES.STRING) {
+      this.eat(TOKEN_TYPES.STRING);
+    } else if (this.currentToken.type === TOKEN_TYPES.BOOLEAN) {
+      this.eat(TOKEN_TYPES.BOOLEAN);
+    } else if (this.currentToken.type === TOKEN_TYPES.INTEGER) {
+      this.eat(TOKEN_TYPES.INTEGER);
+    } else if (this.currentToken.type === TOKEN_TYPES.ID) {
+      this.eat(TOKEN_TYPES.ID);
+
+      while(this.currentToken.type === TOKEN_TYPES.DOT) {
+        this.eat(TOKEN_TYPES.DOT);
+
+        value += `.${this.currentToken.value}`;
+
+        this.eat(TOKEN_TYPES.ID);
+      }
+    } else if(this.currentToken.type === TOKEN_TYPES.DOLLAR) {
+      this.eat(TOKEN_TYPES.DOLLAR);
+
+      value = `${this.currentToken.value}`;
+
+      this.eat(TOKEN_TYPES.ID);
+    }
+
+    return value;
   }
 
   parse() {

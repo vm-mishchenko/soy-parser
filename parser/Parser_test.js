@@ -66,6 +66,20 @@ describe('Parser', () => {
     const ast = parser.parse();
   });
 
+  it('should parse call with package param', () => {
+    const lexer = new Lexer(
+      testHelpers.getTestsProgram(`call-params/package-param.soy`));
+    const parser = new Parser(lexer);
+    const ast = parser.parse();
+  });
+
+  it('should parse call with link param', () => {
+    const lexer = new Lexer(
+      testHelpers.getTestsProgram(`call-params/link-param.soy`));
+    const parser = new Parser(lexer);
+    const ast = parser.parse();
+  });
+
   it('should parse full template', () => {
     const lexer = new Lexer(
       testHelpers.getTestsProgram(`full/full.soy`));
