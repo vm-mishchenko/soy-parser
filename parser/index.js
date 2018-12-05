@@ -168,9 +168,8 @@ class Parser {
       this.eat(TOKEN_TYPES.RCURLY);
     } else {
       // extended param call
-      if(this.currentToken.type === TOKEN_TYPES.ID){
-        // this's "kind" type
-        this.eat(TOKEN_TYPES.ID);
+      if(this.currentToken.type === TOKEN_TYPES.KIND){
+        this.eat(TOKEN_TYPES.KIND);
         this.eat(TOKEN_TYPES.EQUAL);
 
         type = this.currentToken.value;

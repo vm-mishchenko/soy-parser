@@ -5,6 +5,9 @@ const RESERVED_KEYWORDS = {
   template: new Token(TOKEN_TYPES.TEMPLATE, TOKEN_TYPES.TEMPLATE),
   param: new Token(TOKEN_TYPES.PARAM, TOKEN_TYPES.PARAM),
   call: new Token(TOKEN_TYPES.CALL, TOKEN_TYPES.CALL),
+  visibility: new Token(TOKEN_TYPES.VISIBILITY, TOKEN_TYPES.VISIBILITY),
+  kind: new Token(TOKEN_TYPES.KIND, TOKEN_TYPES.KIND),
+  stricthtml: new Token(TOKEN_TYPES.STRICT_HTML, TOKEN_TYPES.STRICT_HTML),
   'true': new Token(TOKEN_TYPES.BOOLEAN, true),
   'false': new Token(TOKEN_TYPES.BOOLEAN, false),
 };

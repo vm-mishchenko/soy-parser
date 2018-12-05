@@ -19,6 +19,9 @@ module.exports = {
   PARAM: 'PARAM',
   CALL: 'CALL',
   TEMPLATE: 'TEMPLATE',
+  VISIBILITY: 'VISIBILITY',
+  KIND: 'KIND',
+  STRICT_HTML: 'STRICT_HTML',
   ID: 'ID',
 
   // other

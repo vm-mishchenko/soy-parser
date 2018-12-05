@@ -161,6 +161,43 @@ describe('Lexer', () => {
     ]);
   });
 
+  it('should parse template with attributes', () => {
+    const lexer = new Lexer(
+        testHelpers.getTestsProgram(`template-with-attributes.soy`));
+
+    checkTokenSequenceType(lexer.getAllTokens(), [
+      // start template
+      TOKEN_TYPES.LCURLY,
+      TOKEN_TYPES.TEMPLATE,
+      TOKEN_TYPES.DOT,
+      TOKEN_TYPES.ID,
+
+      // visibility attribute
+      TOKEN_TYPES.VISIBILITY,
+      TOKEN_TYPES.EQUAL,
+      TOKEN_TYPES.STRING,
+
+      // kind attribute
+      TOKEN_TYPES.KIND,
+      TOKEN_TYPES.EQUAL,
+      TOKEN_TYPES.STRING,
+
+      // strict html attribute
+      TOKEN_TYPES.STRICT_HTML,
+      TOKEN_TYPES.EQUAL,
+      TOKEN_TYPES.STRING,
+
+      TOKEN_TYPES.RCURLY,
+
+      // end template
+      TOKEN_TYPES.LCURLY,
+      TOKEN_TYPES.SLASH,
+      TOKEN_TYPES.TEMPLATE,
+      TOKEN_TYPES.RCURLY,
+      TOKEN_TYPES.EOF,
+    ]);
+  });
+
   describe('call-params', () => {
     it('should parse call with text param', () => {
       const lexer = new Lexer(
@@ -314,7 +351,7 @@ describe('Lexer', () => {
         TOKEN_TYPES.LCURLY,
         TOKEN_TYPES.PARAM,
         TOKEN_TYPES.ID,
-        TOKEN_TYPES.ID,
+        TOKEN_TYPES.KIND,
         TOKEN_TYPES.EQUAL,
         TOKEN_TYPES.STRING,
         TOKEN_TYPES.RCURLY,

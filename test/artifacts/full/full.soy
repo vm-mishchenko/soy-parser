@@ -2,6 +2,7 @@
     {call .child}
         {param first}Test{/param}
         {param second: false /}
+        {param third: $foo.bar /}
     {/call}
     Test
 {/template}
@@ -9,4 +10,5 @@
 {template .child}
     {@param first: string}
     {@param second: bool}
+    {@param third: bool}
 {/template}
