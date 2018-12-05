@@ -1,4 +1,4 @@
-{template .parent}
+{template .parent visibility="private" kind="html" stricthtml="true"}
     {call .child}
         {param first}Test{/param}
         {param second: false /}
@@ -7,7 +7,7 @@
     Test
 {/template}
 
-{template .child}
+{template .child kind="html" }
     {@param first: string}
     {@param second: bool}
     {@param third: bool}
